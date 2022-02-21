@@ -7,11 +7,11 @@ import java.io.IOException;
 
 public class ReportReader {
     public String[] readReport(String fileName) {
-        StringBuilder savedInfo = new StringBuilder();
+        StringBuilder input = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String value = reader.readLine();
             while (value != null) {
-                savedInfo.append(value).append(System.lineSeparator());
+                input.append(value).append(System.lineSeparator());
                 value = reader.readLine();
             }
         } catch (FileNotFoundException e) {
@@ -19,6 +19,6 @@ public class ReportReader {
         } catch (IOException e) {
             throw new RuntimeException("Can't read data from the file " + fileName, e);
         }
-        return savedInfo.toString().split(System.lineSeparator());
+        return input.toString().split(System.lineSeparator());
     }
 }

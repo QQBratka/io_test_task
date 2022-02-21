@@ -1,6 +1,6 @@
 package service;
 
-import validation.MatchValidator;
+import validation.MatchLineValidator;
 import file.reader.writer.ReportReader;
 import file.reader.writer.ReportWriter;
 import java.util.ArrayList;
@@ -9,31 +9,30 @@ import java.util.List;
 public class ReportCreator {
     private static final String D_TYPE = "D";
     private static final String C_TYPE = "C";
-    private static final String EMPTY_SPLITTER = " ";
     private static final int QUANTITY_INDEX = 5;
     private final ReportReader reportReader;
     private final ReportWriter reportWriter;
-    private final MatchValidator matchValidator;
+    private final MatchLineValidator matchValidator;
 
-    public ReportCreator(ReportReader reportReader, ReportWriter reportWriter, MatchValidator matchValidator) {
+    public ReportCreator(ReportReader reportReader,
+                         ReportWriter reportWriter,
+                         MatchLineValidator matchValidator) {
         this.reportReader = reportReader;
         this.reportWriter = reportWriter;
         this.matchValidator = matchValidator;
     }
 
     public void createReport(String fromFileName, String toFileName) {
-        int result;
-        int count;
         StringBuilder output = new StringBuilder();
         String[] input = reportReader.readReport(fromFileName);
-        List<String> typeD = getType(input, D_TYPE);
-        List<String> typeC = getType(input, C_TYPE);
-        for (String lineD : typeD) {
-            result = 0;
-            count = 0;
-            for (String lineC : typeC) {
-                if (matchValidator.isMatching(lineD.split(EMPTY_SPLITTER), lineC.split(EMPTY_SPLITTER))) {
-                    String[] splattedLine = lineC.split(EMPTY_SPLITTER);
+        List<String> typeD = getLinesByType(input, D_TYPE);
+        List<String> typeC = getLinesByType(input, C_TYPE);
+        for (String typeDLines : typeD) {
+            int result = 0;
+            int count = 0;
+            for (String typeCLines : typeC) {
+                if (matchValidator.isValid(typeDLines.split(" "), typeCLines.split(" "))) {
+                    String[] splattedLine = typeCLines.split(" ");
                     result += Integer.parseInt(splattedLine[QUANTITY_INDEX]);
                     count++;
                 }
@@ -47,7 +46,7 @@ public class ReportCreator {
         reportWriter.writeReport(toFileName, output.toString());
     }
 
-    private List<String> getType(String[] inputLines, String firstLetter) {
+    private List<String> getLinesByType(String[] inputLines, String firstLetter) {
         List<String> list = new ArrayList<>();
         for (String line : inputLines) {
             if (line.startsWith(firstLetter)) {

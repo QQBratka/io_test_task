@@ -1,19 +1,19 @@
 import file.reader.writer.ReportReader;
 import service.ReportCreator;
 import validation.DateValidator;
-import validation.MatchValidator;
+import validation.MatchLineValidator;
 import file.reader.writer.ReportWriter;
 
-public class RunApp {
-    private static final String fromFile = "input.csv";
-    private static final String toFile = "output.csv";
+public class Main {
+    private static final String FROM_FILE = "input.csv";
+    private static final String TO_FILE = "output.csv";
 
     public static void main(String[] args) {
         ReportCreator reportCreator
                 = new ReportCreator(new ReportReader(),
                 new ReportWriter(),
-                new MatchValidator(new DateValidator()));
+                new MatchLineValidator(new DateValidator()));
 
-        reportCreator.createReport(fromFile, toFile);
+        reportCreator.createReport(FROM_FILE, TO_FILE);
     }
 }
