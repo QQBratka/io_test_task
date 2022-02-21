@@ -1,11 +1,11 @@
-README.md
 TODO LIST:
 
-Read from input file all data and write it in String Array
-Depends on operation type create 2 Arrays and write D type in first and C type in second
-Create validation method for matching data in line
-Create method that do all operations inside Arrays
-Write all data in output file
+1. Read from input file all data and write it in String Array
+2. Depends on operation type create 2 Arrays and write D type in first and C type in second
+3. Create validation method for matching data in line
+4. Create method that do all operations inside Arrays
+5. Write all data in output file
+
 The Problem
 Webhosting company provides customer support via email. They record reply waiting time, type of question, category, and service. To improve customer satisfaction, they need an analytical tool to evaluate these data.
 Input The company provides 10 different services, each with 3 variations. Questions are divided into 10 types, each can belong to 20 categories, a category can have 5 subcategories.
